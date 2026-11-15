@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anki Pipeline</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="container">
+    <section id="login-view" class="card auth-card hidden">
+      <h1>Anki Pipeline</h1>
+      <p class="muted">Sign in with your Anki password to continue.</p>
+      <form id="login-form">
+        <input id="login-password" type="password" placeholder="Password" required>
+        <button type="submit" class="btn primary">Unlock Dashboard</button>
+      </form>
+      <p id="login-error" class="error hidden"></p>
+    </section>
+
+    <section id="app-view" class="hidden">
+      <header class="topbar">
+        <div>
+          <h1>Anki Pipeline</h1>
+          <span class="muted">Gemini 4 Hydrogen &rarr; Rulang Deck</span>
+        </div>
+        <button id="logout-btn" class="btn ghost">Logout</button>
+      </header>
+
+      <div id="status-banner" class="banner hidden"></div>
+
+      <details id="stage0-panel" class="card section-card" open>
+        <summary class="panel-header section-summary">
+          <h2>1. Input Text or Screenshot</h2>
+        </summary>
+        <div class="section-body">
+          <p class="muted">
+            Paste Rulang sentences (wrap priority words in <code>**bold**</code>),
+            or paste / drop / choose an image (<code>Ctrl+V</code> / <code>Cmd+V</code>).
+          </p>
+          <textarea id="input-text" rows="5" placeholder="Paste Rulang text or **target** words here..."></textarea>
+
+          <div id="drop-zone" class="drop-zone">
+            <input id="image-file" type="file" accept="image/*" hidden>
+            <span id="drop-label">Drop image, paste from clipboard, or click to select</span>
+            <div id="image-preview-wrap" class="preview-wrap hidden">
+              <img id="image-preview" alt="Uploaded preview">
+              <button id="clear-image-btn" type="button" class="btn ghost small">Remove Image</button>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="extract-btn" class="btn primary">Analyze &amp; Extract Words</button>
+          </div>
+        </div>
+      </details>
+
+      <details id="stage1-panel" class="card section-card hidden" open>
+        <summary class="panel-header section-summary">
+          <h2>2. Word Curation (Click to Toggle)</h2>
+          <div id="cefr-stats" class="cefr-stats"></div>
+        </summary>
+        <div class="section-body">
+          <details class="extracted-box">
+            <summary>Extracted Rulang Text</summary>
+            <pre id="extracted-text"></pre>
+          </details>
+
+          <div class="split-grid">
+            <div>
+              <h3>Selected to Add (<span id="selected-count">0</span>)</h3>
+              <div id="selected-list" class="word-list"></div>
+            </div>
+            <div>
+              <h3>Skipped (<span id="skipped-count">0</span>)</h3>
+              <div id="skipped-list" class="word-list"></div>
+            </div>
+          </div>
+
+          <details class="existing-box">
+            <summary>Already in Anki / Filtered (<span id="existing-count">0</span>)</summary>
+            <div id="existing-list" class="chip-row"></div>
+          </details>
+
+          <div class="actions">
+            <button id="generate-btn" class="btn primary">Generate Flashcard Table</button>
+          </div>
+        </div>
+      </details>
+
+      <details id="stage2-panel" class="card section-card hidden" open>
+        <summary class="panel-header section-summary">
+          <h2>3. Card Preview Table (Edit Inline or Approve/Decline)</h2>
+          <span class="muted">Changes are only pushed to Anki when you commit.</span>
+        </summary>
+        <div class="section-body">
+          <div class="table-wrap">
+            <table id="cards-table">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Target_Word</th>
+                  <th>Declined_Form</th>
+                  <th>Word_Meaning</th>
+                  <th>Word_Meaning_ZH</th>
+                  <th>Word_Formation</th>
+                  <th>CEFR_Level</th>
+                  <th>Grammar_Metadata</th>
+                  <th>Sentence_RU</th>
+                  <th>Sentence_EN</th>
+                  <th>Extra_Example_RU</th>
+                  <th>Extra_Example_EN</th>
+                </tr>
+              </thead>
+              <tbody id="cards-tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="actions">
+            <button id="commit-btn" class="btn primary">Commit Approved Cards to Anki</button>
+            <button id="copy-tsv-btn" class="btn ghost hidden">Copy TSV</button>
+            <button id="download-tsv-btn" class="btn ghost hidden">Download TSV</button>
+          </div>
+          <pre id="tsv-output" class="tsv-output hidden"></pre>
+        </div>
+      </details>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

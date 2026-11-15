@@ -1,0 +1,15 @@
+services:
+  anki-pipeline:
+    build: .
+    ports:
+      - "127.0.0.1:9197:8000"
+    env_file:
+      - .env
+    environment:
+      ANKI_COLLECTION_PATH: /data/collection.anki2
+    volumes:
+      - anki_data:/data
+    restart: unless-stopped
+
+volumes:
+  anki_data:

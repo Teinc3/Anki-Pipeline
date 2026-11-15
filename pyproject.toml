@@ -1,0 +1,48 @@
+[project]
+name = "anki-pipeline"
+version = "0.0.0"
+description = "Anki Pipeline."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "anki>=26.9.4",
+    "fastapi>=0.163.0",
+    "google-genai>=3.2.0",
+    "httpx>=0.28.1",
+    "pydantic>=2.14.3",
+    "python-dotenv>=1.2.4",
+    "python-multipart>=0.0.33",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.0",
+    "requests",
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.5.0",
+]
+
+[tool.ruff]
+line-length = 80
+
+[tool.ruff.lint]
+select=["E", "F", "I", "W", "UP", "D204", "COM819"]
+ignore=["F403", "F405"]
+
+[tool.ruff.lint.isort]
+lines-after-imports=2
+section-order=[
+    "future", "standard-library", "third-party",
+    "first-party", "local-folder"
+]
+no-lines-before = ["standard-library", "third-party", "local-folder"]
+
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+exclude=["**/*.py"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["."]
