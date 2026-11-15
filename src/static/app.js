@@ -42,7 +42,7 @@ function setAuthView(authenticated) {
 }
 
 async function checkAuth() {
-  const res = await fetch("/api/auth-status");
+  const res = await fetch("api/auth-status");
   const data = await res.json();
   setAuthView(Boolean(data.authenticated));
 }
@@ -204,7 +204,7 @@ $("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   $("login-error").classList.add("hidden");
   const password = $("login-password").value;
-  const res = await fetch("/api/login", {
+  const res = await fetch("api/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ password })
@@ -219,7 +219,7 @@ $("login-form").addEventListener("submit", async (e) => {
 });
 
 $("logout-btn").addEventListener("click", async () => {
-  await fetch("/api/logout", { method: "POST" });
+  await fetch("api/logout", { method: "POST" });
   setAuthView(false);
 });
 
@@ -279,7 +279,7 @@ $("extract-btn").addEventListener("click", async () => {
     form.append("text", $("input-text").value);
     if (state.imageFile) form.append("image", state.imageFile);
 
-    const res = await fetch("/api/extract", { method: "POST", body: form });
+    const res = await fetch("api/extract", { method: "POST", body: form });
     const data = await readPayload(res);
     if (res.status === 401) {
       setAuthView(false);
@@ -325,7 +325,7 @@ $("generate-btn").addEventListener("click", async () => {
       })),
       skipped_words: state.skippedWords.map((w) => w.target_word)
     };
-    const res = await fetch("/api/generate", {
+    const res = await fetch("api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -360,7 +360,7 @@ $("commit-btn").addEventListener("click", async () => {
   btn.disabled = true;
   btn.textContent = "Syncing to Anki...";
   try {
-    const res = await fetch("/api/commit", {
+    const res = await fetch("api/commit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
