@@ -39,6 +39,7 @@ The context Russian sentence containing only this card's target word wrapped in 
 3. Convert digit quantities and counts into fully written-out, correctly declined Russian words with stress marks (`с 2 читерами` becomes `с двумя́ чи́терами`). Do not convert technical version IDs (`v1.04`), but convert times and years to spoken form.
 4. Do not add stress marks to words in `Sentence_RU` other than spelled-out numerals, and wrap ONLY this card's target word in `<b>...</b>`.
 5. If the input `Sentence_RU` was just a standalone word or incomplete fragment, synthesize a natural gaming or community-management Russian sentence.
+6. Aim for 15-20 words MAX, no minimum word count is required. If the input sentence is longer, shorten it while preserving the target word and as much context as possible, preferring: (a) stop at a comma and replace it with a period, (b) start after a comma (capitalizing the first word), or (c) as a last resort, refactor it into a shorter sentence, retaining most of the context, vocabulary, phrasing etc. Do not replace the original sentence for a completely unrelated new one - only generate for Extra_Example
 
 #### 9. `Sentence_EN`
 Natural English translation of `Sentence_RU`, always retaining standard Arabic digits for visual clarity.
